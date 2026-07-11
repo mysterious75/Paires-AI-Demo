@@ -21,6 +21,12 @@
 
 ---
 
+## Preview
+
+![Paires AI Dashboard](screenshot-frontend.png)
+
+---
+
 ## Overview
 
 Paires AI is an intelligent messaging agent that automates investor-founder communications. It reads inbound messages, classifies them by type, extracts key information, drafts context-aware replies, checks for quality and compliance, and tracks every output with a built-in evaluation framework.
