@@ -106,20 +106,13 @@ Browser (port 3000) → Vite Proxy → FastAPI (port 8000)
 The fastest way to see everything working:
 
 ```bash
-# Terminal 1 — Backend
-cd backend
+git clone https://github.com/mysterious75/Paires-AI-Demo.git
+cd Paires-AI-Demo/backend
 pip install -r requirements.txt
-uvicorn app:app --reload
-
-# Terminal 2 — Frontend
-cd frontend
-npm install
-npm run dev
+python -m uvicorn app:app --reload --port 8000
 ```
 
-Open **http://localhost:3000** in your browser. Click **"Run Complete Demo"** or use the **Quick Fill** buttons in the demo section.
-
-API docs available at **http://localhost:8000/docs**.
+Open **http://localhost:8000/docs** for interactive API docs.
 
 ---
 
@@ -259,7 +252,7 @@ You need **both servers running simultaneously**:
 
 | Server | Command | URL |
 |---|---|---|
-| Backend | `cd backend && uvicorn app:app --reload` | http://localhost:8000 |
+| Backend | `cd backend && python -m uvicorn app:app --reload` | http://localhost:8000 |
 | Frontend | `cd frontend && npm run dev` | http://localhost:3000 |
 
 ### Quick test checklist:
@@ -268,6 +261,120 @@ You need **both servers running simultaneously**:
 2. Open `http://localhost:3000` → Click "Run Complete Demo" → 5 messages processed
 3. Click "Investor Inquiry" Quick Fill → Fill form → "Process & Draft Reply" → AI generates reply
 4. Click ✓ Approve → Metrics update in real-time
+
+---
+
+## Platform-Specific Instructions
+
+### Linux (Ubuntu/Debian)
+
+```bash
+# Install Python if not present
+sudo apt update
+sudo apt install python3 python3-pip python3-venv -y
+
+# Install Node.js (for frontend)
+curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+sudo apt install -y nodejs
+
+# Clone and setup
+git clone https://github.com/mysterious75/Paires-AI-Demo.git
+cd Paires-AI-Demo
+
+# Backend
+cd backend
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+python3 -m uvicorn app:app --reload --port 8000
+
+# Frontend (new terminal)
+cd ../frontend
+npm install
+npm run dev
+```
+
+### macOS
+
+```bash
+# Install Python and Node via Homebrew
+brew install python node
+
+# Clone and setup
+git clone https://github.com/mysterious75/Paires-AI-Demo.git
+cd Paires-AI-Demo
+
+# Backend
+cd backend
+python3 -m venv venv
+source venv/bin/activate
+pip3 install -r requirements.txt
+python3 -m uvicorn app:app --reload --port 8000
+
+# Frontend (new terminal)
+cd ../frontend
+npm install
+npm run dev
+```
+
+### Windows
+
+```powershell
+# Install Python from https://python.org (check "Add to PATH")
+# Install Node.js from https://nodejs.org
+
+# Clone and setup
+git clone https://github.com/mysterious75/Paires-AI-Demo.git
+cd Paires-AI-Demo
+
+# Backend
+cd backend
+python -m venv venv
+venv\Scripts\activate
+pip install -r requirements.txt
+python -m uvicorn app:app --reload --port 8000
+
+# Frontend (new terminal)
+cd ..\frontend
+npm install
+npm run dev
+```
+
+---
+
+## Troubleshooting
+
+### "No module named 'fastapi'"
+```bash
+pip install -r requirements.txt
+```
+
+### "Port 8000 already in use"
+```bash
+# Linux/macOS:
+lsof -ti:8000 | xargs kill -9
+
+# Windows:
+netstat -ano | findstr :8000
+taskkill /PID <PID> /F
+```
+
+### "npm not found"
+```bash
+# Install Node.js from https://nodejs.org
+# Then restart terminal
+```
+
+### Frontend shows blank page
+```bash
+cd frontend
+rm -rf node_modules
+npm install
+npm run dev
+```
+
+### OpenAI API key errors
+The agent works in **demo mode** by default — no API key needed. If you see OpenAI errors, make sure `DEMO_MODE=true` in your `.env` file.
 
 ---
 
